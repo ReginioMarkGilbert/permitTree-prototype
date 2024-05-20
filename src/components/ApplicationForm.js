@@ -24,7 +24,7 @@ const ApplicationForm = ({ onSubmit }) => {
         };
 
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/applications', {
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/createApplication', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

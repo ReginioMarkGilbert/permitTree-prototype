@@ -15,7 +15,7 @@ const StatusPage = ({ applicationId }) => {
 
     const fetchApplications = async () => {
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/applications');
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
             if (response.ok) {
                 const data = await response.json();
                 setApplications(data);
@@ -39,7 +39,7 @@ const StatusPage = ({ applicationId }) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/applications/${selectedApplication._id}`, {
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const StatusPage = ({ applicationId }) => {
 
     const handleDeleteClick = async (id) => {
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/applications/${id}`, {
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
 
