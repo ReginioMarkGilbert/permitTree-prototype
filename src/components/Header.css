@@ -1,0 +1,57 @@
+header {
+    width: 100%;
+    height: 11em;
+    background-color: #4a6b4a;
+    color: white;
+    padding: 10px 0;
+    /* left: 10px; */
+}
+
+header h1 {
+    /* display: inline-block; */
+    top: -3rem;
+    position: relative;
+    left: 38rem;
+    /* align-items: flex-start; */
+    font-family: Jacques Francois;
+    font-weight: normal;
+    /* font-size: 1.5rem; */
+}
+
+.sec_row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-left {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    left: 36rem;
+    bottom: 10px;
+}
+
+.logo-right {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    left: 40rem;
+    bottom: 10px;
+}
+
+.rectangle {
+    width: 100%;
+    height: 60px;
+    position: relative;
+    bottom: 1.9em;
+    background-color: #334b17;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.rectangle h2 {
+    position: relative;
+    top: -5px;
+}

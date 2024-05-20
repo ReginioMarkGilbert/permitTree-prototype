@@ -1,0 +1,103 @@
+.form-container {
+    position: relative;
+    top: 75px;
+    width: 400px;
+    height: 490px;
+    background-color: #e3e2e2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    width: 20em;
+    position: relative;
+    top: 20px;
+    margin: 0 auto; /* Add this line to center the button horizontally */
+    
+    background-color: black;
+    color: white;
+    border: none;
+    /* padding: 10px 20px; */
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #333;
+    color: white;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 0.8em;
+}
+
+.form-container label {
+    /* margin-top: 10px; */
+    /* margin-bottom: 5px; */
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+#name, #address, #phone {
+    width: 350px;
+    /* padding: 10px; */
+    /* margin-bottom: 10px; */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.file-upload-container {
+    display: flex;
+    align-items: center;
+}
+
+#fileUpload {
+    display: none;
+}
+
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #e3e2e2;
+}
+
+.file-upload-label:hover {
+    background-color: #d1d1d1;
+}
+
+.file-upload-label img {
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+}
+
+.file-names {
+    font-size: 16px;
+    color: #333;
+    margin-top: 13px;
+}
+
+.file-names .file-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.file-names .file-name::before {
+    content: '✔';
+    color: green;
+    margin-right: 7px;
+    font-size: 16px;
+}

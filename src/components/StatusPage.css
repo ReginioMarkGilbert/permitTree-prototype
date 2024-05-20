@@ -1,0 +1,135 @@
+.status-page {
+    width: 80%;
+    margin: 0 auto;
+    padding: 15px 10px 20px 20px;
+    text-align: left;
+    color: black;
+    position: relative;
+    top: 3em;
+}
+
+.status-page h2 {
+    color: gray;
+    font-size: 20px;
+}
+
+.status-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.status-page th,
+.status-page td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.status-page th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.status-page .status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+}
+
+.status-page .in-progress {
+    background-color: orange;
+}
+
+.update-form-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.update-form-button:hover {
+    background-color: #45a049;
+}
+
+.delete-form-button {
+    margin-left: 10px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.update-form-popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will push the content to the top and the buttons to the bottom */
+    height: 300px;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* x-offset, y-offset, blur-radius, color */
+    z-index: 1000;
+}
+
+.update-form-popup form {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensure the form takes full height of the popup */
+}
+
+.update-form-popup label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.update-form-popup input[type="text"],
+.update-form-popup input[type="tel"] {
+    width: 250px;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.update-form-popup button {
+    width: 100px;
+    /* margin: 0 auto; */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: auto; /* This pushes the buttons to the bottom */
+}
+
+.update-form-popup button[type="submit"] {
+    background-color: #008CBA;
+    /* margin-right: 10px; */
+}
+
+.update-form-popup button[type="button"] {
+    background-color: #f44336;
+    margin-top: 5px;
+}
+
+.update-form-popup button:hover {
+    background-color: #45a049;
+}
+
+.update-form-popup button[type="button"]:hover {
+    background-color: #f44336;
+}
