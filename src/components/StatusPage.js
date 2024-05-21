@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './StatusPage.css';
 
@@ -18,9 +19,10 @@ const StatusPage = ({ applicationId }) => {
             const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
             if (response.ok) {
                 const data = await response.json();
+                console.log('Fetched applications:', data);
                 setApplications(data);
             } else {
-                console.error('Failed to fetch applications');
+                console.error('Failed to fetch applications', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -52,7 +54,7 @@ const StatusPage = ({ applicationId }) => {
                 setShowUpdateForm(false);
                 setSelectedApplication(null);
             } else {
-                console.error('Failed to update application');
+                console.error('Failed to update application', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -68,7 +70,7 @@ const StatusPage = ({ applicationId }) => {
             if (response.ok) {
                 await fetchApplications();
             } else {
-                console.error('Failed to delete application');
+                console.error('Failed to delete application', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
