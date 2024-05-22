@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import paperclip from '../assets/paperclip.svg';
+import uploadIcon from '../assets/upload_icn.svg';
 import './ApplicationForm.css';
 
 const ApplicationForm = ({ onSubmit }) => {
@@ -7,6 +7,12 @@ const ApplicationForm = ({ onSubmit }) => {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [fileNames, setFileNames] = useState([]);
+
+    const [brand, setBrand] = useState('');
+    const [model, setModel] = useState('');
+    const [serialNumber, setSerialNumber] = useState('');
+    const [dateOfAcquisition, setDateOfAcquisition] = useState('');
+    const [powerOutput, setPowerOutput] = useState('');
 
     const handleFileChange = (event) => {
         const files = event.target.files;
