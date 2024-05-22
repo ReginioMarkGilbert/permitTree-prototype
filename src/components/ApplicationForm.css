@@ -1,103 +1,223 @@
 .form-container {
     position: relative;
-    top: 75px;
-    width: 400px;
-    height: 490px;
-    background-color: #e3e2e2;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    background-color: #fff;
+    width: 900px;
+    height: 600px;
+    padding: 40px;
+    margin-right: 30px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
 
-.submit-button {
-    width: 20em;
-    position: relative;
-    top: 20px;
-    margin: 0 auto; /* Add this line to center the button horizontally */
-    
-    background-color: black;
-    color: white;
-    border: none;
-    /* padding: 10px 20px; */
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 16px;
-}
+    h3 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: normal;
+        margin-bottom: 20px;
+        position: relative;
+        bottom: 30px;
+    }    
+    /* registration form */
+    form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-.submit-button:hover {
-    background-color: #333;
-    color: white;
-}
-
-.form-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 0.8em;
-}
-
-.form-container label {
-    /* margin-top: 10px; */
-    /* margin-bottom: 5px; */
-    font-weight: bold;
-    align-self: flex-start;
-}
-
-#name, #address, #phone {
-    width: 350px;
-    /* padding: 10px; */
-    /* margin-bottom: 10px; */
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    .form-section {
+        /* width: 45%; */
+        /* padding: 10px; */
+        width: 45%;
+        padding: 10px;
+        position: relative;
+        bottom: 10px;
+        right: 10px; /* move form fields */
+    }
+    .form-title {
+        font-size: 18px;
+        font-weight: normal;
+        margin-bottom: 10px;
+        position:relative;
+        bottom: 30px;
+    }
+    label {
+        position: relative;
+        bottom: 20px;
+        display: block;
+        font-size: 14px;
+        font-weight: normal;
+        margin-bottom: 5px;
+    }
+    /* fields  */
+    input[type="text"],
+    input[type="tel"],
+    input[type="date"],
+    input[type="file"] {
+        position: relative;
+        bottom: 20px;
+        width: 400px;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 16px;
+    }
+    input[type="text"]::placeholder,
+    input[type="tel"]::placeholder,
+    input[type="date"]::placeholder{
+        color: #999;
+    }
 }
 
 .file-upload-container {
-    display: flex;
-    align-items: center;
+    /* move the file upload button */
+    position: relative;
+    bottom: 10.5em;
+    right: 20em;
+    /* display: flex; */
+    /* align-items: center; */
+    /* margin-bottom: 20px; */
+
+    .label-file {
+        position: relative;
+        /* top: 1em; */
+        left: 22.8em;
+    }
 }
 
-#fileUpload {
+/*hide the box behind the choose file button*/
+input[type="file"] { 
     display: none;
 }
 
 .file-upload-label {
-    display: inline-flex;
+    position: absolute;
+    top: 10px;
+    left: 24em;
+    width: 110px;
+    height: 33px;
+
+    display: flex;
     align-items: center;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid #000000;
+    border-radius: 5px;
     cursor: pointer;
-    color: #333;
+    transition: background-color 0.3s ease;
 
-    margin-top: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #e3e2e2;
-}
+    img {
+        margin-right: 10px;
+        width: 18px;
+        height: 18px;
+    }
 
-.file-upload-label:hover {
-    background-color: #d1d1d1;
-}
+    &:hover {
+        background-color: #ddd;
+    }
 
-.file-upload-label img {
-    margin-right: 10px;
-    width: 24px;
-    height: 24px;
 }
 
 .file-names {
-    font-size: 16px;
-    color: #333;
-    margin-top: 13px;
+    padding: 2px 0;
+    position: relative;
+    bottom: 7em;
+    right: 20em;
+
 }
 
-.file-names .file-name {
-    display: flex;
-    align-items: center;
+.file-name {
+    font-size: 14px;
     margin-bottom: 5px;
+    margin-left: 20px;
+    &::before {
+        content: '✔';
+        display: inline-block;
+        margin-right: 5px; /* space between the checkmark and the file name */
+        color: green;
+    }
 }
 
-.file-names .file-name::before {
-    content: '✔';
-    color: green;
-    margin-right: 7px;
+.submit-button {
+    position: relative;
+    right: 15px;
+    width: 400px;
+    height: 40px;
+    /* center the text in the button */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #000;
+    color: #fff;
+    border: none;
     font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
+    &:hover {
+        background-color: #333;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-section {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        width: 700px;
+        /* background-color: black; */
+    }
+
+    #chainsaw-details {
+        width: 70%;
+        position: relative;
+        right: 5em;
+        bottom: 20px;
+        label {
+            position: relative;
+            left: 5em;
+        }
+    }
+
+    .form-section input {
+        width: 80%;
+        margin: 5px auto;
+        position: relative;
+        right: 10px;
+    }
+
+    .form-section label {
+        position: relative;
+        /* right: 2em; */
+        display: block;
+    }
+
+    .label-file{
+        position: relative;
+        /* top: 11em; */
+        left: 25em;
+    }
+    .file-upload-label {
+        position: absolute;
+        top: 11em;
+        left: -15em;
+        width: 110px;
+        height: 35px;
+    
+        /* display: flex;
+        align-items: center; */
+        padding: 10px;
+        background-color: transparent;
+        border: 1px solid #000000;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-button {
+        width: 90%;
+        margin: 20px auto;
+    }
 }
