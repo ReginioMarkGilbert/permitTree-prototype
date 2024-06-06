@@ -1,0 +1,307 @@
+.admin-page {
+    width: 70%;
+    margin: 0 auto;
+    padding: 15px 10px 20px 20px;
+    text-align: left;
+    color: black;
+    position: relative;
+    top: 3em;
+}
+
+.admin-page h2 {
+    color: gray;
+    font-size: 20px;
+}
+
+.admin-page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-page th,
+.admin-page td {
+    padding: 10px;
+    border: 2px solid #ddd;
+    text-align: center;
+}
+
+.admin-page th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.admin-page .status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    color: black;
+    background-color: orange;
+    width: 100px;
+    height: 30px;
+    position: relative;
+}
+
+.status-dropdown {
+    /* This is to remove the arrow dropdown: */
+    /* appearance: none; */
+
+    outline: 0;
+    background: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 120px;
+    height: 35px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+        background-color: #e6e6e6;
+        border-color: #ccc;
+    }
+
+    &:focus {
+        border-color: #999;
+    }
+
+    & option {
+        background-color: #fff;
+        color: #333;
+    }
+
+}
+
+.status-dropdown.for-review {
+    background-color: orange;
+    color: white;
+}
+
+.status-dropdown.accepted {
+    background-color: green;
+    color: white;
+}
+
+.status-dropdown.in-progress {
+    background-color: orange;
+    color: white;
+}
+
+.status-dropdown.approved {
+    background-color: green;
+    color: white;
+}
+
+.status-dropdown.rejected {
+    background-color: red;
+    color: white;
+}
+
+.status-dropdown:hover {
+    background-color: #e6e6e6;
+    border-color: #ccc;
+}
+
+.status-dropdown:focus {
+    border-color: #999;
+}
+
+.status-dropdown option {
+    background-color: #fff;
+    color: #333;
+}
+
+.update_button {
+    background-color: #101111;
+    color: white;
+    font-size: 12px;
+    border: 2px solid black;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.update_button:hover .add-data-button:hover{
+    transform: scale(1.03);
+    background-color: #333;
+}
+
+.delete_button {
+    background-color: transparent;
+    color: black;
+    border: 1px solid black;
+    margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete_button:hover {
+    background-color: #333;
+    transform: scale(1.03);
+    color: white;
+}
+
+
+.search-filter-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+}
+
+.filter-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.filter-dropdown {
+    width: 130px;
+    height: 25px;
+    padding-left: 5px;
+    /* padding-right: 10px; */
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter_section {
+    position: relative;
+    display: inline-block;
+}
+
+.filter_icon {
+    cursor: pointer;
+}
+
+.sort_dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: rgb(160, 29, 29);
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-left: 10px;
+}
+
+.refresh-icon:hover {
+    transform: rotate(90deg) scale(1.1);
+}
+
+.home-button {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.graph-container{
+    margin-top: 10em;
+}
+
+.input-container, .tree-graph {
+    max-width: 800px;
+    min-height: 400px;
+    margin: 0 auto;
+}
+
+.time-frame-dropdown {
+    padding: 10px;
+    margin: 5px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 120px;
+    height: 40px;
+}
+
+.time-frame-select,
+.add-tree-data-form {
+    padding: 0;
+    margin-top: 30px;
+}
+
+.time-frame-select {
+    /* border: 2px solid #ccc; */
+    width: 0;
+    position: relative;
+    margin-bottom: 20px; /* Add some space below the dropdown */
+}
+
+.add-tree-data-form {
+    position: relative;
+    margin-top: 20px; /* Add some space above the form */
+    right: 16.7em;
+    .add-tree-data-title {
+        font-size: 14px;
+        color: #333;
+        position: relative;
+        left: 19em;
+    }
+}
+
+.input-date, .input-count {
+    padding: 10px;
+    /* margin: 5px 0; */
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    height: 40px;
+}
+
+.add-data-button{
+    background-color: #101111;
+    color: white;
+    font-size: 12px;
+    border: 2px solid black;
+    letter-spacing: 1px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+    height: 40px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #333;
+    }
+}
+

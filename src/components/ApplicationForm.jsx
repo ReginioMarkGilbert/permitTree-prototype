@@ -1,28 +1,48 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './styles/ApplicationForm.css';
 import uploadIcon from '../assets/upload_icn.svg';
-import './ApplicationForm.css';
+import closeIcon from '../assets/close_icn.svg';
 
-const ApplicationForm = ({ onSubmit }) => {
+const ApplicationForm = ({ onSubmit, selectedStore }) => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
     const [fileNames, setFileNames] = useState([]);
-
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
     const [serialNumber, setSerialNumber] = useState('');
     const [dateOfAcquisition, setDateOfAcquisition] = useState('');
     const [powerOutput, setPowerOutput] = useState('');
 
+    const navigate = useNavigate(); // Initialize navigate
+
     const handleFileChange = (event) => {
-        const files = event.target.files;
-        const fileNamesArray = Array.from(files).map(file => file.name);
-        setFileNames(fileNamesArray);
+        const newFiles = event.target.files;
+        const newFileNamesArray = Array.from(newFiles).map(file => file.name);
+
+        // Check for duplicate file names
+        const duplicateFiles = newFileNamesArray.filter(fileName => fileNames.includes(fileName));
+        if (duplicateFiles.length > 0) {
+            alert(`The following files are duplicates and will not be uploaded: ${duplicateFiles.join(', ')}`);
+            return;
+        }
+
+        if (fileNames.length + newFileNamesArray.length > 5) {
+            alert("You can only upload a maximum of 5 files.");
+            return;
+        }
+
+        setFileNames(prevFileNames => [...prevFileNames, ...newFileNamesArray]);
+    };
+
+    const handleRemoveFile = (fileNameToRemove) => {
+        setFileNames(prevFileNames => prevFileNames.filter(fileName => fileName !== fileNameToRemove));
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         const formData = {
             name,
             address,
@@ -31,11 +51,15 @@ const ApplicationForm = ({ onSubmit }) => {
             model,
             serialNumber,
             dateOfAcquisition,
-            powerOutput
+            powerOutput,
+            fileNames,
+            store: selectedStore // Ensure store is included in the form data
         };
 
+        console.log('Form Data:', formData); // Log the form data
+
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/createApplication', {
+            const response = await fetch('http://localhost:3000/api/createApplication', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,7 +70,7 @@ const ApplicationForm = ({ onSubmit }) => {
             if (response.ok) {
                 const data = await response.json();
                 console.log('Application submitted:', data);
-                onSubmit(data._id);  // Pass the ID to the parent component
+                navigate('/message'); // Navigate to the MessageBox component
             } else {
                 console.error('Failed to submit application');
             }
@@ -103,7 +127,6 @@ const ApplicationForm = ({ onSubmit }) => {
                         id="brand"
                         name="brand"
                         placeholder="Enter Brand"
-                        // pattern="[A-Za-z0-9 ]+"
                         value={brand}
                         onChange={(e) => setBrand(e.target.value)}
                         title="Brand can include letters and numbers"
@@ -116,7 +139,6 @@ const ApplicationForm = ({ onSubmit }) => {
                         id="model"
                         name="model"
                         placeholder="Enter Model"
-                        // pattern="[A-Za-z0-9 ]+"
                         value={model}
                         onChange={(e) => setModel(e.target.value)}
                         title="Model can include letters and numbers"
@@ -129,7 +151,6 @@ const ApplicationForm = ({ onSubmit }) => {
                         id="serialNumber"
                         name="serialNumber"
                         placeholder="Enter Serial Number"
-                        // pattern="[A-Za-z0-9]+"
                         value={serialNumber}
                         onChange={(e) => setSerialNumber(e.target.value)}
                         title="Serial Number can include letters and numbers"
@@ -152,7 +173,6 @@ const ApplicationForm = ({ onSubmit }) => {
                         id="powerOutput"
                         name="powerOutput"
                         placeholder="e.g. 5 kW or 6.7 bhp"
-                        // pattern="[0-9.]+ (kW|bhp)"
                         title="Enter power output in kW or bhp"
                         value={powerOutput}
                         onChange={(e) => setPowerOutput(e.target.value)}
@@ -166,19 +186,32 @@ const ApplicationForm = ({ onSubmit }) => {
                         type="file"
                         id="fileUpload"
                         name="fileUpload"
-                        accept="image/*,.pdf,.docx"
+                        accept="image/*,.pdf,.docx,.svg"
                         multiple
                         onChange={handleFileChange}
-                        max="5" // Maximum number of files allowed
+                        max="5" // Maximum number of files
                     />
-                    <button className="file-upload-label"onClick={() => document.getElementById('fileUpload').click()}>
+                    <button
+                        className="file-upload-label"
+                        type="button"
+                        onClick={() => document.getElementById('fileUpload').click()}
+                    >
                         <img src={uploadIcon} alt="Upload Icon"/>
                         Add file
                     </button>
                 </div>
-                <div id="fileNames" className="file-names">
+                <div id="form_fileNames" className="form_file-names">
                     {fileNames.map((fileName, index) => (
-                        <div key={index} className="file-name">{fileName}</div>
+                        <div key={index} className="form_file-name">
+                            {fileName}
+                            <button
+                                type="button"
+                                className="formRemove-file-button"
+                                onClick={() => handleRemoveFile(fileName)}
+                            >
+                                <img className='remove-file-icon' src={closeIcon} alt="Close Icon" />
+                            </button>
+                        </div>
                     ))}
                 </div>
 

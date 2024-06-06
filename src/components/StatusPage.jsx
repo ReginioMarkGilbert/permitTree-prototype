@@ -1,7 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
-import './StatusPage.css';
+import { useNavigate } from 'react-router-dom';
+import './styles/StatusPage.css';
 import UpdateForm from './UpdateForm';
+import backHome from '../assets/back_home.svg';
+import refreshIcon from '../assets/refresh_page_icn.svg';
 
 const StatusPage = ({ applicationId }) => {
     const [applications, setApplications] = useState([]);
@@ -16,7 +18,10 @@ const StatusPage = ({ applicationId }) => {
     const [newSerialNumber, setNewSerialNumber] = useState('');
     const [newDateOfAcquisition, setNewDateOfAcquisition] = useState('');
     const [newPowerOutput, setNewPowerOutput] = useState('');
-    // const [newFileNames, setNewFileNames] = useState([]);
+    const [newFileNames, setNewFileNames] = useState([]);
+    const [newStore, setNewStore] = useState('');
+
+    const navigate = useNavigate(); // Initialize navigate using useNavigate hook
 
     useEffect(() => {
         fetchApplications();
@@ -24,7 +29,7 @@ const StatusPage = ({ applicationId }) => {
 
     const fetchApplications = async () => {
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
+            const response = await fetch('http://localhost:3000/api/getApplications');
             if (response.ok) {
                 const data = await response.json();
                 console.log('Fetched applications:', data);
@@ -47,7 +52,8 @@ const StatusPage = ({ applicationId }) => {
         setNewSerialNumber(application.serialNumber);
         setNewDateOfAcquisition(application.dateOfAcquisition);
         setNewPowerOutput(application.powerOutput);
-        // setNewFileNames(application.fileNames || []);
+        setNewFileNames(application.fileNames || []);
+        setNewStore(application.store);
         setShowUpdateForm(true);
     };
 
@@ -62,12 +68,13 @@ const StatusPage = ({ applicationId }) => {
             model: newModel,
             serialNumber: newSerialNumber,
             dateOfAcquisition: newDateOfAcquisition,
-            powerOutput: newPowerOutput
-            // fileNames: newFileNames
+            powerOutput: newPowerOutput,
+            fileNames: newFileNames,
+            store: newStore,
         };
 
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
+            const response = await fetch(`http://localhost:3000/api/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,7 +96,7 @@ const StatusPage = ({ applicationId }) => {
 
     const handleDeleteClick = async (id) => {
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
+            const response = await fetch(`http://localhost:3000/api/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
 
@@ -103,14 +110,30 @@ const StatusPage = ({ applicationId }) => {
         }
     };
 
+    const handleRefreshClick = () => {
+        fetchApplications();
+    };
+
+    const handleHomeClick = () => {
+        navigate('/'); // Navigate to the home page
+    };
+
+
     return (
         <div className="status-page">
+            <div className="icon-container">
+                <div className="home-button" onClick={handleHomeClick}>
+                    <img src={backHome} alt="Home" />
+                </div>
+                <img src={refreshIcon} alt="Refresh" className="status-refresh-icon" onClick={handleRefreshClick} />
+            </div>
             <h2>Application Status</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Application Type</th>
                         <th>Application ID</th>
+                        <th>Date Submitted</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -119,8 +142,14 @@ const StatusPage = ({ applicationId }) => {
                     {applications.map(application => (
                         <tr key={application._id}>
                             <td>Chainsaw Application</td>
-                            <td>{application._id}</td>
-                            <td><span className={`status ${application.status.toLowerCase()}`}>{application.status}</span></td>
+                            <td>{application.customId}</td>
+                            <td>
+                                {new Date(application.dateOfSubmission).toLocaleDateString()} | {
+                                new Date(application.dateOfSubmission).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+                            </td>
+                            <td className="status-cell">
+                                <span className={`status ${application.status.toLowerCase().replace(' ', '-')}`}>{application.status}</span>
+                            </td>
                             <td>
                                 <button className='update_button' onClick={() => handleUpdateClick(application)}>Update Form</button>
                                 <button className='delete_button' onClick={() => handleDeleteClick(application._id)}>Delete</button>
@@ -148,8 +177,10 @@ const StatusPage = ({ applicationId }) => {
                     setNewDateOfAcquisition={setNewDateOfAcquisition}
                     newPowerOutput={newPowerOutput}
                     setNewPowerOutput={setNewPowerOutput}
-                    // newFileNames={newFileNames}
-                    // setNewFileNames={setNewFileNames}
+                    newFileNames={newFileNames}
+                    setNewFileNames={setNewFileNames}
+                    newStore={newStore}
+                    setNewStore={setNewStore}
                     handleUpdateSubmit={handleUpdateSubmit}
                     setShowUpdateForm={setShowUpdateForm}
                 />
@@ -157,6 +188,5 @@ const StatusPage = ({ applicationId }) => {
         </div>
     );
 };
-
 
 export default StatusPage;
