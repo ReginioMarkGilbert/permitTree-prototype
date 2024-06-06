@@ -21,7 +21,7 @@ function App() {
 
     const handleSubmitApplication = async (formData) => {
         try {
-            const response = await fetch('http://localhost:3000/api/createApplication', {
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/createApplication', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

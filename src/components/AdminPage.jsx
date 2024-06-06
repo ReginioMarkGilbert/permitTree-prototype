@@ -67,7 +67,7 @@ const AdminPage = () => {
 
     const fetchApplications = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/getApplications?sort=${sortOption}`);
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getApplications?sort=${sortOption}`);
             if (response.ok) {
                 const data = await response.json();
                 setApplications(data);
@@ -82,7 +82,7 @@ const AdminPage = () => {
 
     const fetchTreeData = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/getTreeData?timeFrame=${timeFrame}`);
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?timeFrame=${timeFrame}`);
             if (response.ok) {
                 const data = await response.json();
                 const labels = data.map(item => new Date(item.date).toLocaleDateString());
@@ -178,7 +178,7 @@ const AdminPage = () => {
         };
 
         try {
-            const response = await fetch(`http://localhost:3000/api/updateApplication/${selectedApplication._id}`, {
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ const AdminPage = () => {
 
     const handleDeleteClick = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/deleteApplication/${id}`, {
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
 
@@ -216,7 +216,7 @@ const AdminPage = () => {
 
     const handleStatusChange = async (id, newStatus) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/updateApplication/${id}`, {
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -249,7 +249,7 @@ const AdminPage = () => {
 
     const handleAddTreeData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/addTreeData', {
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
