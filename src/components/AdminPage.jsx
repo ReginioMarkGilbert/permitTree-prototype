@@ -279,7 +279,8 @@ const AdminPage = () => {
                 } else {
                     // Add more detailed error handling
                     const errorData = await updateResponse.json();
-                    throw new Error(`Failed to update tree data: ${errorData.message}`);
+                    const errorMessage = errorData.message || 'The server did not provide an error message';
+                    throw new Error(`Failed to update tree data: ${errorMessage}`);
                 }
             } else {
                 throw new Error('Failed to fetch existing tree data');
