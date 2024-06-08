@@ -277,13 +277,13 @@ const AdminPage = () => {
                     setNewTreeCount('');
                     fetchTreeData(); // Refresh the graph data
                 } else {
-                    console.error('Failed to add tree data');
+                    throw new Error('Failed to update tree data');
                 }
             } else {
-                console.error('Failed to fetch existing tree data');
+                throw new Error('Failed to fetch existing tree data');
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error(error);
         }
     };
 
