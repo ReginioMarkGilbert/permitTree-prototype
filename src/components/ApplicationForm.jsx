@@ -67,12 +67,12 @@ const ApplicationForm = ({ onSubmit, selectedStore }) => {
                 body: JSON.stringify(formData),
             });
 
-            if (response.ok) {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
                 const data = await response.json();
                 console.log('Application submitted:', data);
                 navigate('/message'); // Navigate to the MessageBox component
-            } else {
-                console.error('Failed to submit application');
             }
         } catch (error) {
             console.error('Error:', error);
