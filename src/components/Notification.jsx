@@ -14,9 +14,9 @@ const Notification = () => {
     useEffect(() => {
         console.log('Fetching notifications...');
         axios.get('https://permittree-api.netlify.app/.netlify/functions/api/notifications')
-            .then(response => {
-                console.log('Fetched notifications:', response.data);
-                setNotifications(response.data);
+            .then(({ data }) => {  // Destructure data directly
+                console.log('Fetched notifications:', data);
+                setNotifications(data);
             })
             .catch(error => {
                 console.error('Error fetching notifications:', error);
