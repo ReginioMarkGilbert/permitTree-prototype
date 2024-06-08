@@ -4,8 +4,8 @@ import './styles/StatusPage.css';
 import UpdateForm from './UpdateForm';
 import backHome from '../assets/back_home.svg';
 import refreshIcon from '../assets/refresh_page_icn.svg';
-// const LOCAL_URL = 'http://localhost:3000/api';
-const LOCAL_URL = 'https://permittree-api.netlify.app/.netlify/functions/api';
+const LOCAL_URL = 'http://localhost:3000/api';
+// const LOCAL_URL = 'https://permittree-api.netlify.app/.netlify/functions/api';
 const StatusPage = ({ applicationId }) => {
     const [applications, setApplications] = useState([]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
