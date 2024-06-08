@@ -261,8 +261,8 @@ const AdminPage = () => {
                 const updatedCount = existingData.count + parseInt(newTreeCount, 10);
 
                 // Update the tree data
-                const updateResponse = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/addTreeData`, {
-                    method: 'POST',
+                const updateResponse = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateTreeData`, {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
