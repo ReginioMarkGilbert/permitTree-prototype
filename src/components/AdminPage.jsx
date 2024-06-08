@@ -249,29 +249,29 @@ const AdminPage = () => {
 
     const handleAddTreeData = async () => {
         try {
+            // Validate input data
+            if (!newTreeDate || !newTreeCount) {
+                throw new Error('Date and count are required');
+            }
+
             // First, fetch the existing data for the given date
             const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?date=${newTreeDate}`);
             if (response.ok) {
                 const existingData = await response.json();
-                let newCount = parseInt(newTreeCount, 10);
-    
-                // If there's already data for this date, add the new count to the existing count
-                if (existingData && existingData.length > 0) {
-                    newCount += existingData[0].count;
-                }
-    
-                // Then, update or create the entry with the new count
-                const updateResponse = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
+                const updatedCount = existingData.count + parseInt(newTreeCount, 10);
+
+                // Update the tree data
+                const updateResponse = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/addTreeData`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
                         date: newTreeDate,
-                        count: newCount
-                    })
+                        count: updatedCount,
+                    }),
                 });
-    
+
                 if (updateResponse.ok) {
                     setNewTreeDate('');
                     setNewTreeCount('');
@@ -286,7 +286,8 @@ const AdminPage = () => {
                 throw new Error('Failed to fetch existing tree data');
             }
         } catch (error) {
-            console.error(error);
+            console.error('Error:', error);
+            alert(`Error: ${error.message}`);
         }
     };
 
