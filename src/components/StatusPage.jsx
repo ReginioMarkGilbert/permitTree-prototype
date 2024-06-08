@@ -30,31 +30,15 @@ const StatusPage = ({ applicationId }) => {
     const fetchApplications = async () => {
         try {
             const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Fetched applications:', data);
-                setApplications(data);
-            } else {
-                console.error('Failed to fetch applications', response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+            const data = await response.json();
+            console.log('Fetched applications:', data);
+            setApplications(data);
         } catch (error) {
             console.error('Error:', error);
         }
-    };
-
-    const handleUpdateClick = (application) => {
-        setSelectedApplication(application);
-        setNewName(application.name);
-        setNewAddress(application.address);
-        setNewPhone(application.phone);
-        setNewBrand(application.brand);
-        setNewModel(application.model);
-        setNewSerialNumber(application.serialNumber);
-        setNewDateOfAcquisition(application.dateOfAcquisition);
-        setNewPowerOutput(application.powerOutput);
-        setNewFileNames(application.fileNames || []);
-        setNewStore(application.store);
-        setShowUpdateForm(true);
     };
 
     const handleUpdateSubmit = async (event) => {
@@ -82,13 +66,13 @@ const StatusPage = ({ applicationId }) => {
                 body: JSON.stringify(updatedApplication),
             });
 
-            if (response.ok) {
-                await fetchApplications();
-                setShowUpdateForm(false);
-                setSelectedApplication(null);
-            } else {
-                console.error('Failed to update application', response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+
+            await fetchApplications();
+            setShowUpdateForm(false);
+            setSelectedApplication(null);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -100,11 +84,11 @@ const StatusPage = ({ applicationId }) => {
                 method: 'DELETE',
             });
 
-            if (response.ok) {
-                await fetchApplications();
-            } else {
-                console.error('Failed to delete application', response.statusText);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
+
+            await fetchApplications();
         } catch (error) {
             console.error('Error:', error);
         }
