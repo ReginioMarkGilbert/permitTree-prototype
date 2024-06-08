@@ -59,7 +59,7 @@ const ApplicationForm = ({ onSubmit, selectedStore }) => {
         console.log('Form Data:', formData); // Log the form data
 
         try {
-            const response = await fetch('/.netlify/functions/api/createApplication', {
+            const response = await fetch('/api/createApplication', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
