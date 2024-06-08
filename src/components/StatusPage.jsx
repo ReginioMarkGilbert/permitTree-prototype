@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './styles/StatusPage.css';
 import UpdateForm from './UpdateForm';
@@ -30,11 +29,16 @@ const StatusPage = ({ applicationId }) => {
 
     const fetchApplications = async () => {
         try {
-            const { data } = await axios.get('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
-            console.log('Fetched applications:', data);
-            setApplications(data);
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Fetched applications:', data);
+                setApplications(data);
+            } else {
+                console.error('Failed to fetch applications', response.statusText);
+            }
         } catch (error) {
-            console.error('Error fetching applications:', error);
+            console.error('Error:', error);
         }
     };
 
@@ -70,21 +74,39 @@ const StatusPage = ({ applicationId }) => {
         };
 
         try {
-            await axios.put(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, updatedApplication);
-            await fetchApplications();
-            setShowUpdateForm(false);
-            setSelectedApplication(null);
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedApplication),
+            });
+
+            if (response.ok) {
+                await fetchApplications();
+                setShowUpdateForm(false);
+                setSelectedApplication(null);
+            } else {
+                console.error('Failed to update application', response.statusText);
+            }
         } catch (error) {
-            console.error('Error updating application:', error);
+            console.error('Error:', error);
         }
     };
 
     const handleDeleteClick = async (id) => {
         try {
-            await axios.delete(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`);
-            await fetchApplications();
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                await fetchApplications();
+            } else {
+                console.error('Failed to delete application', response.statusText);
+            }
         } catch (error) {
-            console.error('Error deleting application:', error);
+            console.error('Error:', error);
         }
     };
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import {
@@ -68,33 +67,43 @@ const AdminPage = () => {
 
     const fetchApplications = useCallback(async () => {
         try {
-            const { data } = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getApplications?sort=${sortOption}`);
-            setApplications(data);
-            setFilteredApplications(data);
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getApplications?sort=${sortOption}`);
+            if (response.ok) {
+                const data = await response.json();
+                setApplications(data);
+                setFilteredApplications(data);
+            } else {
+                console.error('Failed to fetch applications', response.statusText);
+            }
         } catch (error) {
-            console.error('Error fetching applications:', error);
+            console.error('Error:', error);
         }
     }, [sortOption]);
 
     const fetchTreeData = useCallback(async () => {
         try {
-            const { data } = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?timeFrame=${timeFrame}`);
-            const labels = data.map(item => new Date(item.date).toLocaleDateString());
-            const counts = data.map(item => item.count);
-            setTreeData({
-                labels,
-                datasets: [
-                    {
-                        label: 'Number of Trees Cut',
-                        data: counts,
-                        fill: false,
-                        backgroundColor: 'rgba(75,192,192,0.4)',
-                        borderColor: 'rgba(75,192,192,1)',
-                    },
-                ],
-            });
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?timeFrame=${timeFrame}`);
+            if (response.ok) {
+                const data = await response.json();
+                const labels = data.map(item => new Date(item.date).toLocaleDateString());
+                const counts = data.map(item => item.count);
+                setTreeData({
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Number of Trees Cut',
+                            data: counts,
+                            fill: false,
+                            backgroundColor: 'rgba(75,192,192,0.4)',
+                            borderColor: 'rgba(75,192,192,1)',
+                        },
+                    ],
+                });
+            } else {
+                console.error('Failed to fetch tree data', response.statusText);
+            }
         } catch (error) {
-            console.error('Error fetching tree data:', error);
+            console.error('Error:', error);
         }
     }, [timeFrame]);
 
@@ -169,10 +178,21 @@ const AdminPage = () => {
         };
 
         try {
-            const response = await axios.put(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, updatedApplication);
-            await fetchApplications();
-            setShowUpdateForm(false);
-            setSelectedApplication(null);
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedApplication),
+            });
+
+            if (response.ok) {
+                await fetchApplications();
+                setShowUpdateForm(false);
+                setSelectedApplication(null);
+            } else {
+                console.error('Failed to update application', response.statusText);
+            }
         } catch (error) {
             console.error('Error:', error);
         }
@@ -180,8 +200,15 @@ const AdminPage = () => {
 
     const handleDeleteClick = async (id) => {
         try {
-            await axios.delete(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`);
-            await fetchApplications();
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                await fetchApplications();
+            } else {
+                console.error('Failed to delete application', response.statusText);
+            }
         } catch (error) {
             console.error('Error:', error);
         }
@@ -189,8 +216,19 @@ const AdminPage = () => {
 
     const handleStatusChange = async (id, newStatus) => {
         try {
-            const response = await axios.put(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${id}`, { status: newStatus });
-            await fetchApplications();
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+
+            if (response.ok) {
+                await fetchApplications();
+            } else {
+                console.error('Failed to update status', response.statusText);
+            }
         } catch (error) {
             console.error('Error:', error);
         }
@@ -211,13 +249,23 @@ const AdminPage = () => {
 
     const handleAddTreeData = async () => {
         try {
-            const response = await axios.post('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
-                date: newTreeDate,
-                count: parseInt(newTreeCount, 10)
+            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    date: newTreeDate,
+                    count: parseInt(newTreeCount, 10)
+                })
             });
-            setNewTreeDate('');
-            setNewTreeCount('');
-            fetchTreeData(); // Refresh the graph data
+            if (response.ok) {
+                setNewTreeDate('');
+                setNewTreeCount('');
+                fetchTreeData(); // Refresh the graph data
+            } else {
+                console.error('Failed to add tree data');
+            }
         } catch (error) {
             console.error('Error:', error);
         }
