@@ -12,7 +12,7 @@ const Notification = () => {
 
     useEffect(() => {
         console.log('Fetching notifications...');
-        fetch('https://permittree-api.netlify.app/.netlify/functions/api/notifications')
+        fetch('https://permittree-api.netlify.app/.netlify/functions/api/getNotificaions')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -29,7 +29,7 @@ const Notification = () => {
     }, []);
 
     const markAsRead = (id) => {
-        fetch(`https://permittree-api.netlify.app/.netlify/functions/api/notifications/${id}/read`, { method: 'PUT' })
+        fetch(`https://permittree-api.netlify.app/.netlify/functions/api/markNotificationAsRead/${id}/read`, { method: 'PUT' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
