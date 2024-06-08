@@ -249,22 +249,38 @@ const AdminPage = () => {
 
     const handleAddTreeData = async () => {
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    date: newTreeDate,
-                    count: parseInt(newTreeCount, 10)
-                })
-            });
+            // First, fetch the existing data for the given date
+            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?date=${newTreeDate}`);
             if (response.ok) {
-                setNewTreeDate('');
-                setNewTreeCount('');
-                fetchTreeData(); // Refresh the graph data
+                const existingData = await response.json();
+                let newCount = parseInt(newTreeCount, 10);
+    
+                // If there's already data for this date, add the new count to the existing count
+                if (existingData && existingData.length > 0) {
+                    newCount += existingData[0].count;
+                }
+    
+                // Then, update or create the entry with the new count
+                const updateResponse = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/addTreeData', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        date: newTreeDate,
+                        count: newCount
+                    })
+                });
+    
+                if (updateResponse.ok) {
+                    setNewTreeDate('');
+                    setNewTreeCount('');
+                    fetchTreeData(); // Refresh the graph data
+                } else {
+                    console.error('Failed to add tree data');
+                }
             } else {
-                console.error('Failed to add tree data');
+                console.error('Failed to fetch existing tree data');
             }
         } catch (error) {
             console.error('Error:', error);
