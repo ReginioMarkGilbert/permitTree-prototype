@@ -4,7 +4,8 @@ import './styles/StatusPage.css';
 import UpdateForm from './UpdateForm';
 import backHome from '../assets/back_home.svg';
 import refreshIcon from '../assets/refresh_page_icn.svg';
-
+// const LOCAL_URL = 'http://localhost:3000/api';
+const LOCAL_URL = 'https://permittree-api.netlify.app/.netlify/functions/api';
 const StatusPage = ({ applicationId }) => {
     const [applications, setApplications] = useState([]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -29,7 +30,7 @@ const StatusPage = ({ applicationId }) => {
 
     const fetchApplications = async () => {
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
+            const response = await fetch(LOCAL_URL + '/getApplications');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -58,7 +59,7 @@ const StatusPage = ({ applicationId }) => {
 
     const handleUpdateSubmit = async (event) => {
         event.preventDefault();
-    
+
         const updatedApplication = {
             name: newName,
             address: newAddress,
@@ -71,7 +72,7 @@ const StatusPage = ({ applicationId }) => {
             fileNames: newFileNames,
             store: newStore,
         };
-    
+
         try {
             const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
@@ -80,11 +81,11 @@ const StatusPage = ({ applicationId }) => {
                 },
                 body: JSON.stringify(updatedApplication),
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             await fetchApplications();
             setShowUpdateForm(false);
             setSelectedApplication(null);
@@ -98,11 +99,11 @@ const StatusPage = ({ applicationId }) => {
             const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             await fetchApplications();
         } catch (error) {
             console.error('Error:', error);
