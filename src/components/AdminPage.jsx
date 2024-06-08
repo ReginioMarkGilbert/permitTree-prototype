@@ -277,7 +277,9 @@ const AdminPage = () => {
                     setNewTreeCount('');
                     fetchTreeData(); // Refresh the graph data
                 } else {
-                    throw new Error('Failed to update tree data');
+                    // Add more detailed error handling
+                    const errorData = await updateResponse.json();
+                    throw new Error(`Failed to update tree data: ${errorData.message}`);
                 }
             } else {
                 throw new Error('Failed to fetch existing tree data');
