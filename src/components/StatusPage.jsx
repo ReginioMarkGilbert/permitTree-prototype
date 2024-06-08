@@ -30,9 +30,9 @@ const StatusPage = ({ applicationId }) => {
 
     const fetchApplications = async () => {
         try {
-            const response = await axios.get('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
-            console.log('Fetched applications:', response.data);
-            setApplications(response.data);
+            const { data } = await axios.get('https://permittree-api.netlify.app/.netlify/functions/api/getApplications');
+            console.log('Fetched applications:', data);
+            setApplications(data);
         } catch (error) {
             console.error('Error fetching applications:', error);
         }
@@ -70,7 +70,7 @@ const StatusPage = ({ applicationId }) => {
         };
 
         try {
-            const response = await axios.put(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, updatedApplication);
+            await axios.put(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, updatedApplication);
             await fetchApplications();
             setShowUpdateForm(false);
             setSelectedApplication(null);

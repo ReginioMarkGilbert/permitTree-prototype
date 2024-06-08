@@ -68,9 +68,9 @@ const AdminPage = () => {
 
     const fetchApplications = useCallback(async () => {
         try {
-            const response = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getApplications?sort=${sortOption}`);
-            setApplications(response.data);
-            setFilteredApplications(response.data);
+            const { data } = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getApplications?sort=${sortOption}`);
+            setApplications(data);
+            setFilteredApplications(data);
         } catch (error) {
             console.error('Error fetching applications:', error);
         }
@@ -78,8 +78,7 @@ const AdminPage = () => {
 
     const fetchTreeData = useCallback(async () => {
         try {
-            const response = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?timeFrame=${timeFrame}`);
-            const data = response.data;
+            const { data } = await axios.get(`https://permittree-api.netlify.app/.netlify/functions/api/getTreeData?timeFrame=${timeFrame}`);
             const labels = data.map(item => new Date(item.date).toLocaleDateString());
             const counts = data.map(item => item.count);
             setTreeData({
