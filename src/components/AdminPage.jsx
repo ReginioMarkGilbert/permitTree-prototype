@@ -114,7 +114,7 @@ const AdminPage = () => {
 
     const handleSearchAndFilter = useCallback(() => {
         let filtered = applications.filter(application =>
-            application.customId.includes(searchInput)
+            application.customId && application.customId.includes(searchInput)
         );
 
         if (sortOption === 'id-asc') {
