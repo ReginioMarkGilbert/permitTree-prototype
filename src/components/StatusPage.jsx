@@ -41,9 +41,24 @@ const StatusPage = ({ applicationId }) => {
         }
     };
 
+    const handleUpdateClick = (application) => {
+        setSelectedApplication(application);
+        setNewName(application.name);
+        setNewAddress(application.address);
+        setNewPhone(application.phone);
+        setNewBrand(application.brand);
+        setNewModel(application.model);
+        setNewSerialNumber(application.serialNumber);
+        setNewDateOfAcquisition(application.dateOfAcquisition);
+        setNewPowerOutput(application.powerOutput);
+        setNewFileNames(application.fileNames || []);
+        setNewStore(application.store);
+        setShowUpdateForm(true);
+    };
+
     const handleUpdateSubmit = async (event) => {
         event.preventDefault();
-
+    
         const updatedApplication = {
             name: newName,
             address: newAddress,
@@ -56,7 +71,7 @@ const StatusPage = ({ applicationId }) => {
             fileNames: newFileNames,
             store: newStore,
         };
-
+    
         try {
             const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
@@ -65,11 +80,11 @@ const StatusPage = ({ applicationId }) => {
                 },
                 body: JSON.stringify(updatedApplication),
             });
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
+    
             await fetchApplications();
             setShowUpdateForm(false);
             setSelectedApplication(null);
@@ -83,11 +98,11 @@ const StatusPage = ({ applicationId }) => {
             const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
+    
             await fetchApplications();
         } catch (error) {
             console.error('Error:', error);
