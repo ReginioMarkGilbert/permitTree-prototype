@@ -4,8 +4,8 @@ import './styles/StatusPage.css';
 import UpdateForm from './UpdateForm';
 import backHome from '../assets/back_home.svg';
 import refreshIcon from '../assets/refresh_page_icn.svg';
-// const LOCAL_URL = 'http://localhost:3000/api';
-const LOCAL_URL = 'https://permittree-api.netlify.app/.netlify/functions/api';
+const LOCAL_URL = 'http://localhost:3000/api';
+// const LOCAL_URL = 'https://permittree-api.netlify.app/.netlify/functions/api';
 const StatusPage = ({ applicationId }) => {
     const [applications, setApplications] = useState([]);
     const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -74,7 +74,7 @@ const StatusPage = ({ applicationId }) => {
         };
 
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/updateApplication/${selectedApplication._id}`, {
+            const response = await fetch(LOCAL_URL + `/updateApplication/${selectedApplication._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ const StatusPage = ({ applicationId }) => {
 
     const handleDeleteClick = async (id) => {
         try {
-            const response = await fetch(`https://permittree-api.netlify.app/.netlify/functions/api/deleteApplication/${id}`, {
+            const response = await fetch(LOCAL_URL + `/deleteApplication/${id}`, {
                 method: 'DELETE',
             });
 

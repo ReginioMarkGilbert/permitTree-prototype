@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import bellnotif from '../assets/bellnotif.svg';
 import './styles/Notification.css';
 import useClickOutside from '../hooks/useClickOutside';
-
+const LOCAL_URL = 'http://localhost:3000/api';
 const Notification = () => {
     const [notifications, setNotifications] = useState([]);
     const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -12,7 +12,7 @@ const Notification = () => {
 
     useEffect(() => {
         console.log('Fetching notifications...');
-        fetch('https://permittree-api.netlify.app/.netlify/functions/api/getNotificaions')
+        fetch(LOCAL_URL + '/getNotifications')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -29,7 +29,7 @@ const Notification = () => {
     }, []);
 
     const markAsRead = (id) => {
-        fetch(`https://permittree-api.netlify.app/.netlify/functions/api/markNotificationAsRead/${id}/read`, { method: 'PUT' })
+        fetch(LOCAL_URL + `/markNotificationAsRead/${id}/read`, { method: 'PUT' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
