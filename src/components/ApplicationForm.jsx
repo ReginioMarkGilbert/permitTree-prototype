@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './styles/ApplicationForm.css';
 import uploadIcon from '../assets/upload_icn.svg';
@@ -59,23 +60,11 @@ const ApplicationForm = ({ onSubmit, selectedStore }) => {
         console.log('Form Data:', formData); // Log the form data
 
         try {
-            const response = await fetch('https://permittree-api.netlify.app/.netlify/functions/api/createApplication', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log('Application submitted:', data);
-                navigate('/message'); // Navigate to the MessageBox component
-            } else {
-                console.error('Failed to submit application');
-            }
+            const response = await axios.post('https://permittree-api.netlify.app/.netlify/functions/api/createApplication', formData);
+            console.log('Application submitted:', response.data);
+            navigate('/message'); // Navigate to the MessageBox component
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error submitting application:', error);
         }
     };
 
