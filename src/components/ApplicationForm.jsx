@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './styles/ApplicationForm.css';
 import uploadIcon from '../assets/upload_icn.svg';
 import closeIcon from '../assets/close_icn.svg';
-const LOCAL_URL = 'http://localhost:3000/api';
+const LOCAL_URL = 'http://localhost:5000/api';
 
 const ApplicationForm = ({ onSubmit, selectedStore }) => {
     const [name, setName] = useState('');
@@ -60,7 +60,7 @@ const ApplicationForm = ({ onSubmit, selectedStore }) => {
         console.log('Form Data:', formData); // Log the form data
 
         try {
-            const response = await fetch(LOCAL_URL + '/createApplication', {
+            const response = await fetch(LOCAL_URL + '/applications', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

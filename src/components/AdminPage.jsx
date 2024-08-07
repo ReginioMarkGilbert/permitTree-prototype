@@ -16,7 +16,7 @@ import UpdateForm from './UpdateForm';
 import backHome from '../assets/back_home.svg';
 import filter from '../assets/Filter.svg';
 import refreshIcon from '../assets/refresh_page_icn.svg';
-const LOCAL_URL = 'http://localhost:3000/api';
+const LOCAL_URL = 'http://localhost:5000/api';
 ChartJS.register(
     CategoryScale,
     LinearScale,
